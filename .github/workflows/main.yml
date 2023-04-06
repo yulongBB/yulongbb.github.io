@@ -11,10 +11,10 @@ jobs:
         uses: actions/checkout@master
         # 安装依赖
       - name: install
-        run: npm
+        run: npm install
         # 打包构建
       - name: build
-        run: npm build:test
+        run: npm run build
         # 部署运行
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.0
