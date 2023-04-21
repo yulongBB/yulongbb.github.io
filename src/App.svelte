@@ -1,47 +1,85 @@
-<script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+<script>
+// @ts-nocheck
+
+  import Nested from "./lib/Nested.svelte";
+  import Info from "./lib/Info.svelte";
+  import { marked } from 'marked';
+
+  let name = "yulongbb";
+  let src = "/src/assets/svelte.svg";
+
+  const pkg = {
+    name: "svelte",
+    version: 3,
+    speed: "blazing",
+    website: "https://svelte.dev",
+  };
+
+  let cats = [
+		{ id: 'J---aiyznGQ', name: 'Keyboard Cat' },
+		{ id: 'z_AbfPXTKms', name: 'Maru' },
+		{ id: 'OUtn3pvWmpg', name: 'Henri The Existential Cat' }
+	];
+
+
+  import Thing from './lib/Thing.svelte';
+
+	let things = [
+		{ id: 1, name: 'apple' },
+		{ id: 2, name: 'banana' },
+		{ id: 3, name: 'carrot' },
+		{ id: 4, name: 'doughnut' },
+		{ id: 5, name: 'egg' },
+	];
+
+	function handleClick() {
+		things = things.slice(1);
+	}
+
+	let value = `Some words are *italic*, some are **bold**`;
 </script>
 
-<main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+<h1><img {src} alt="logo" /> {name.toUpperCase()} BlogTemplate</h1>
 
-  <div class="card">
-    <Counter />
-  </div>
+<p>This is a title.</p>
+<Nested answer={"42"} />
+<Nested />
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
+<Info {...pkg} />
 
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
+
+<h1>The Famous Cats of YouTube</h1>
+
+<ul>
+	{#each cats as { id, name }, i}
+		<li><a target="_blank" href="https://www.youtube.com/watch?v={id}" rel="noreferrer">
+			{i + 1}: {name}
+		</a></li>
+	{/each}
+</ul>
+
+
+<button on:click={handleClick}>
+	Remove first thing
+</button>
+
+{#each things as thing (thing.id) }
+	<Thing name={thing.name}/>
+{/each}
+
+
+{@html marked(value)}
+
+<textarea bind:value></textarea>
+
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  p {
+    color: purple;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 2em;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+
+  textarea { width: 100%; height: 200px; }
+
 </style>
