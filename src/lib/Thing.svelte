@@ -1,13 +1,12 @@
 <script>
-	import { onDestroy } from 'svelte';
+	import { onDestroy } from "svelte";
 
 	const emojis = {
-        apple: "🍎",
-        banana: "🍌",
-        carrot: "🥕",
-        doughnut: "🍩",
-        egg: "🥚"
-	}
+		angular: "🍎",
+		flutter: "🍌",
+		svelte: "🥕",
+		Nestjs: "🍩",
+	};
 
 	// the name is updated whenever the prop value changes...
 	export let name;
@@ -17,23 +16,19 @@
 
 	// observe in the console which entry is removed
 	onDestroy(() => {
-		console.log('thing destroyed: ' + name)
+		console.log("thing destroyed: " + name);
 	});
 </script>
 
-<p>
-	<span>The emoji for { name } is { emoji }</span>
-</p>
+<span> {name} {emoji}</span>
 
 <style>
-	p {
-		margin: 0.8em 0;
-	}
 	span {
 		display: inline-block;
 		padding: 0.2em 1em 0.3em;
+		margin: 1em;
 		text-align: center;
 		border-radius: 0.2em;
-		background-color: #FFDFD3;
+		background-color: #ffdfd3;
 	}
 </style>

@@ -1,85 +1,85 @@
 <script>
-// @ts-nocheck
+	// @ts-nocheck
 
-  import Nested from "./lib/Nested.svelte";
-  import Info from "./lib/Info.svelte";
-  import { marked } from 'marked';
+	import { marked } from "marked";
 
-  let name = "yulongbb";
-  let src = "/src/assets/svelte.svg";
+	let name = "yulongbb";
+	let src = "/src/assets/svelte.svg";
 
-  const pkg = {
-    name: "svelte",
-    version: 3,
-    speed: "blazing",
-    website: "https://svelte.dev",
-  };
-
-  let cats = [
-		{ id: 'J---aiyznGQ', name: 'Keyboard Cat' },
-		{ id: 'z_AbfPXTKms', name: 'Maru' },
-		{ id: 'OUtn3pvWmpg', name: 'Henri The Existential Cat' }
+	let cats = [
+		{ id: "1", name: "离线地图" },
+		{ id: "2", name: "PDF预览" },
 	];
+	let title = cats[1].name;
 
-
-  import Thing from './lib/Thing.svelte';
+	import Thing from "./lib/Thing.svelte";
 
 	let things = [
-		{ id: 1, name: 'apple' },
-		{ id: 2, name: 'banana' },
-		{ id: 3, name: 'carrot' },
-		{ id: 4, name: 'doughnut' },
-		{ id: 5, name: 'egg' },
+		{ id: 1, name: "angular" },
+		{ id: 2, name: "flutter" },
+		{ id: 3, name: "svelte" },
+		{ id: 4, name: "Nestjs" },
 	];
 
-	function handleClick() {
-		things = things.slice(1);
+	function handleClick(event) {
+		console.log(event);
+		title = event;
+
 	}
 
 	let value = `Some words are *italic*, some are **bold**`;
 </script>
 
-<h1><img {src} alt="logo" /> {name.toUpperCase()} BlogTemplate</h1>
+<h1><img {src} alt="logo" /> 学习笔记</h1>
 
-<p>This is a title.</p>
-<Nested answer={"42"} />
-<Nested />
-
-<Info {...pkg} />
-
-
-<h1>The Famous Cats of YouTube</h1>
-
-<ul>
-	{#each cats as { id, name }, i}
-		<li><a target="_blank" href="https://www.youtube.com/watch?v={id}" rel="noreferrer">
-			{i + 1}: {name}
-		</a></li>
-	{/each}
-</ul>
-
-
-<button on:click={handleClick}>
-	Remove first thing
-</button>
-
-{#each things as thing (thing.id) }
-	<Thing name={thing.name}/>
+{#each things as thing (thing.id)}
+	<Thing name={thing.name} />
 {/each}
 
+<main>
+	<div class="left">
+		<h1>目录</h1>
 
-{@html marked(value)}
+		<ul>
+			{#each cats as { id, name }, i}
+				<li>
+					<button on:click={() => handleClick(name)}>
+						{i + 1}: {name}
+					</button>
+				</li>
+			{/each}
+		</ul>
+	</div>
+	<div class="right">
+		<p>{title}</p>
 
-<textarea bind:value></textarea>
 
+		{@html marked(value)}
+	</div>
+</main>
 
 <style>
-  p {
-    color: purple;
-    font-family: "Comic Sans MS", cursive;
-    font-size: 2em;
-  }
+	main {
+		display: flex;
+		height: 500px;
+		flex-flow: row nowrap;
+	}
+	.left {
+		width: 200px;
+		background: #fff;
+	}
+	.right {
+		flex: 1;
+		background: #f6f8fa;
+	}
+	/* p {
+		color: purple;
+		font-family: "Comic Sans MS", cursive;
+		font-size: 2em;
+	}
 
-  textarea { width: 100%; height: 200px; }
-
+	textarea {
+		width: 100%;
+		height: 200px;
+	} */
 </style>
